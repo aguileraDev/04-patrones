@@ -1,0 +1,30 @@
+package org.example.services.booking;
+
+import org.example.model.Booking;
+import org.example.services.interfaces.ICommand;
+import org.example.utils.ConsoleUtil;
+
+import java.time.LocalDate;
+
+/**
+ * @author Manuel Aguilera / @aguileradev
+ */
+public class UpdateBooking implements ICommand<Booking> {
+    @Override
+    public Booking execute() {
+        String email = ConsoleUtil.captureString("Ingrese su correo electronico: ");
+        LocalDate birthDate = ConsoleUtil.captureDate("Ingrese su fecha de nacimiento (yyyy-mm-dd): ");
+        Booking existingBooking = getExistingBookingByEmailAndBirthDate(email, birthDate);
+        if (existingBooking == null) {
+            return "Reserva no encontrada.";
+        }
+        System.out.println(existingBooking);
+        if (shouldUpdateRoom()) {
+            updateRoom(existingBooking);
+        }
+        if (shouldUpdateLodging()) {
+            updateLodging(existingBooking);
+        }
+        return "Reserva actualizada exitosamente";
+    }
+}

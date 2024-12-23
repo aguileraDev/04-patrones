@@ -1,0 +1,30 @@
+package org.example;
+
+import org.example.factory.initializer.LodgingInitializer;
+import org.example.model.Lodging;
+
+import java.util.List;
+
+/**
+ *
+ * @author Manuel Aguilera / @aguileradev
+*/public class LodgingRepository {
+
+    private List<Lodging> lodgingList;
+
+    private LodgingRepository() {
+        this.lodgingList = LodgingInitializer.initializeLodgingList();
+    }
+
+    public static class LodgingRepositoryHolder {
+        public static final LodgingRepositoryHolder LODGING_INSTANCE = new LodgingRepository();
+    }
+
+    public static LodgingRepository getInstance(){
+        return LodgingRepositoryHolder.LODGING_INSTANCE;
+    }
+
+    public List<Lodging> getLodgingList() {
+        return lodgingList;
+    }
+}
